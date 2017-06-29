@@ -1,0 +1,48 @@
+<h1>Book Flight</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <table>
+      <tr>
+        <th>Departing from</th>
+        <th>Destination</th>
+        <th>Time</th>
+        <th>Date</th>
+        <th>Duration</th>
+      </tr>
+
+      <tr>
+        <% flight = @booking.flight %>
+        <td><%= flight.from_airport.code %></td>
+        <td><%= flight.to_airport.code %></td>
+        <td><%= flight.start_datetime.strftime("%H:%M") %></td>
+        <td><%= flight.start_datetime.strftime("%Y-%m-%d") %></td>
+        <td><%= distance_of_time_in_words(flight.duration*60) %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@booking) do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <%#- hidden_field_tag(:flight_id, flight.id) -%>
+      <%= f.hidden_field(:flight_id) -%>
+
+      <% i = 0 %>
+      <%-# @seats.times do |i| -%>
+        <%#- f.fields_for(@booking.passengers.build) do |passenger| -%>
+      <%= f.fields_for(:passengers) do |passenger| %>
+        <h3>Information of passenger <%= i+=1 %></h3>
+
+        <%= passenger.label :name %>
+        <%= passenger.text_field(:name, class: 'form-control') %>
+
+        <%= passenger.label :email %>
+        <%= passenger.text_field(:email, class: 'form-control') %>
+      <% end %>
+      <%#_ end -%>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

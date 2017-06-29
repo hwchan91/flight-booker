@@ -1,0 +1,47 @@
+<h1>Booking Details</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h3> Flight information</h3>
+    <table>
+      <tr>
+        <th>Departing from</th>
+        <th>Destination</th>
+        <th>Time</th>
+        <th>Date</th>
+        <th>Duration</th>
+      </tr>
+
+      <tr>
+        <% flight = @booking.flight %>
+        <td><%= flight.from_airport.code %></td>
+        <td><%= flight.to_airport.code %></td>
+        <td><%= flight.start_datetime.strftime("%H:%M") %></td>
+        <td><%= flight.start_datetime.strftime("%Y-%m-%d") %></td>
+        <td><%= distance_of_time_in_words(flight.duration*60) %></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h3> Passenger information</h3>
+    <table>
+      <tr>
+        <th>Passenger</th>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+
+      <% i = 0 %>
+      <% @booking.passengers.each do |passenger| %>
+        <tr>
+          <td><%= i += 1 %></td>
+          <td><%= passenger.name %></td>
+          <td><%= passenger.email %></td>
+        </tr>
+        <% end %>
+    </table>
+  </div>
+</div>

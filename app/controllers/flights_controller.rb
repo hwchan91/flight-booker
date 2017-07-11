@@ -3,6 +3,7 @@ class FlightsController < ApplicationController
     @airports = Airport.all.map{ |a| [a.code, a.id] }
     flight_dates = Flight.all.map{ |f| f.start_datetime.strftime("%Y-%m-%d") }.uniq.sort
     @flight_dates = flight_dates.each_with_index.map{|a, b| [a, b]}
+    @matching_flights = "none"
 
     if !params[:passengers].nil?
       #@seats = params[:flight][:passengers]

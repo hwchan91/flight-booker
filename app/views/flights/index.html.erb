@@ -74,24 +74,26 @@ If form_for is used, the only method to keep the search value would be to make t
 <% end %>
 
 <br>
-<% if !@matching_flights[0].nil? %>
-  <h1> Choose a Flight</h1>
-  <%= form_tag(new_booking_path, method: :get) do %>
-    <table>
-      <tr>
-        <th></th>
-        <th>Departing from</th>
-        <th>Destination</th>
-        <th>Time</th>
-        <th>Date</th>
-        <th>Duration</th>
-      </tr>
-      <%= render @matching_flights %>
-    </table>
-    <%= hidden_field_tag(:seats, @seats) %>
-    <%= submit_tag "Book Now!", class: "btn btn-primary" %>
+<% if @matching_flights != "none" %>
+  <% if @matching_flights[0].nil? %>
+    <br>
+    <p style="text-align:center"> No matching flights</p>
+  <% else %>
+    <h1> Choose a Flight</h1>
+    <%= form_tag(new_booking_path, method: :get) do %>
+      <table>
+        <tr>
+          <th></th>
+          <th>Departing from</th>
+          <th>Destination</th>
+          <th>Time</th>
+          <th>Date</th>
+          <th>Duration</th>
+        </tr>
+        <%= render @matching_flights %>
+      </table>
+      <%= hidden_field_tag(:seats, @seats) %>
+      <%= submit_tag "Book Now!", class: "btn btn-primary" %>
+    <% end %>
   <% end %>
-<% else %>
-  <br>
-  <p style="text-align:center"> No matching flights</p>
 <% end %>

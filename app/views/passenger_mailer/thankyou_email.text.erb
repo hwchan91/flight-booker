@@ -1,0 +1,15 @@
+Thank you for booking your flight, <%= @passenger.name %>
+
+The booking details are shown as follows:
+<% flight = @passenger.booking.flight %>
+
+                Flight information
+------------------------------------------------
+Departing from: <%= flight.from_airport.code %>
+Destination: <%= flight.to_airport.code %>
+Time: <%= flight.start_datetime.strftime("%H:%M") %>
+Date: <%= flight.start_datetime.strftime("%Y-%m-%d") %>
+Duration: <%= distance_of_time_in_words(flight.duration*60) %>
+
+
+Have a great day!

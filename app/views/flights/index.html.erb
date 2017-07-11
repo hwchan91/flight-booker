@@ -2,6 +2,35 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    <%= form_tag(root_path, method: "get") do %>
+      <%= label_tag(:from_airport_id, "From Airport") %>
+      <%= select_tag(:from_airport_id, options_for_select(@airports, params[:from_airport_id]), include_blank: true) %>
+
+      <%= label_tag(:to_airport_id, "To Airport") %>
+      <%= select_tag(:to_airport_id, options_for_select(@airports, params[:to_airport_id]), include_blank: true) %>
+
+      <%= label_tag(:passengers, "No. of Passengers") %>
+      <%= select_tag(:passengers, options_for_select((1..4).map{|i| [i.to_s, i]}, params[:passengers]), include_blank: true) %>
+
+      <%= label_tag(:start_date, "Flight Date") %>
+      <%= select_tag(:start_date, options_for_select(@flight_dates, params[:start_date]), include_blank: true) %>
+
+      <%= submit_tag("Search", class: "btn btn-primary") %>
+    <% end %>
+  </div>
+</div>
+
+
+<% if false %> #This comments outs the whole block
+Comments: changed form_for to form_tag above so that params[:from_airport_id] can be used instead of params[:flight][:from_airport_id]
+this allows the form to display the selected value after submitting search,
+else an error: nil class for params[:flight][:from_airport_id] will be resulted when the user never searched as params[:flight] is nil before search
+
+If form_for is used, the only method to keep the search value would be to make the nearly identical forms, like I did below
+
+<% if @matching_flights.nil? %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
     <%= form_for(:flight, url: root_path, method: :get) do |f| %>
       <%= f.label :from_airport_id, "From Airport" %>
       <%= f.select(:from_airport_id, options_for_select(@airports), include_blank: true) %>
@@ -19,9 +48,34 @@
     <% end %>
   </div>
 </div>
+<% end %>
 
 <% if !@matching_flights.nil? %>
-<h1> Choose a Flight</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:flight, url: root_path, method: :get) do |f| %>
+      <%= f.label :from_airport_id, "From Airport" %>
+      <%= f.select(:from_airport_id, options_for_select(@airports, params[:flight][:from_airport_id]), include_blank: true) %>
+
+      <%= f.label :to_airport_id, "To Airport" %>
+      <%= f.select(:to_airport_id, options_for_select(@airports, params[:flight][:to_airport_id]), include_blank: true) %>
+
+      <%= f.label :passengers, "No. of Passengers" %>
+      <%= f.select(:passengers, (1..4).map{|i| [i.to_s, i]}, include_blank: true, selected: params[:flight][:passengers]) %>
+
+      <%= f.label :start_date, "Flight Date" %>
+      <%= f.select(:start_date, options_for_select(@flight_dates, params[:flight][:start_date]), include_blank: true) %>
+
+      <%= f.submit "Search", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<% end %>#End of block
+<% end %>
+
+<br>
+<% if !@matching_flights[0].nil? %>
+  <h1> Choose a Flight</h1>
   <%= form_tag(new_booking_path, method: :get) do %>
     <table>
       <tr>
@@ -37,4 +91,7 @@
     <%= hidden_field_tag(:seats, @seats) %>
     <%= submit_tag "Book Now!", class: "btn btn-primary" %>
   <% end %>
+<% else %>
+  <br>
+  <p style="text-align:center"> No matching flights</p>
 <% end %>

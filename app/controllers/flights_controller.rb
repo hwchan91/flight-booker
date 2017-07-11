@@ -4,15 +4,20 @@ class FlightsController < ApplicationController
     flight_dates = Flight.all.map{ |f| f.start_datetime.strftime("%Y-%m-%d") }.uniq.sort
     @flight_dates = flight_dates.each_with_index.map{|a, b| [a, b]}
 
-    if !params[:flight].nil?
-      @seats = params[:flight][:passengers]
+    if !params[:passengers].nil?
+      #@seats = params[:flight][:passengers]
+      @seats = params[:passengers]
       if @seats == ""
         flash[:danger] = "Choose number of passengers"
         render 'index'
       else
-        from_airport_id = params[:flight][:from_airport_id]
-        to_airport_id = params[:flight][:to_airport_id]
-        start_date = params[:flight][:start_date]
+        #from_airport_id = params[:flight][:from_airport_id]
+        #to_airport_id = params[:flight][:to_airport_id]
+        #start_date = params[:flight][:start_date]
+
+        from_airport_id = params[:from_airport_id]
+        to_airport_id = params[:to_airport_id]
+        start_date = params[:start_date]
         start_date = flight_dates[start_date.to_i] if start_date != ""
         matching_flights = Flight.all
         matching_flights = matching_flights.where(from_airport_id: from_airport_id) if from_airport_id != ""

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Thank you for booking your flight, <%= @passenger.name %></h3>
+    <p>
+      The booking details are shown as follows:
+      <h4> Flight information</h3>
+      <table style="border-collapse: collapse">
+        <tr>
+          <th style="border: 1px solid black; padding: 15px 10px">Departing from</th>
+          <th style="border: 1px solid black; padding: 15px 10px">Destination</th>
+          <th style="border: 1px solid black; padding: 15px 10px">Time</th>
+          <th style="border: 1px solid black; padding: 15px 10px">Date</th>
+          <th style="border: 1px solid black; padding: 15px 10px">Duration</th>
+        </tr>
+
+        <tr>
+          <% flight = @passenger.booking.flight %>
+          <td style="border: 1px solid black; padding: 15px 10px"><%= flight.from_airport.code %></td>
+          <td style="border: 1px solid black; padding: 15px 10px"><%= flight.to_airport.code %></td>
+          <td style="border: 1px solid black; padding: 15px 10px"><%= flight.start_datetime.strftime("%H:%M") %></td>
+          <td style="border: 1px solid black; padding: 15px 10px"><%= flight.start_datetime.strftime("%Y-%m-%d") %></td>
+          <td style="border: 1px solid black; padding: 15px 10px"><%= distance_of_time_in_words(flight.duration*60) %></td>
+        </tr>
+      </table>
+
+    <p>Have a great day!</p>
+  </body>
+</html>

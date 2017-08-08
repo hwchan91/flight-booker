@@ -1,24 +1,20 @@
-# README
+# Flight Booker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A sample site of a one-way flight booker. Customers can search for flights and a confirmation email will be sent out to the inputed emails.
 
-Things you may want to cover:
+Link to website: https://flightbooker-hwchan91.herokuapp.com
 
-* Ruby version
 
-* System dependencies
+## Built With
 
-* Configuration
+* Ruby on Rails
 
-* Database creation
 
-* Database initialization
+## Author
 
-* How to run the test suite
+* **Dion, Chan Hin Won** -  [hwchan91](https://github.com/hwchan91)
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+## Acknowledgements
 
-* ...
+* This project is part of [The Odin Project Curriculum](https://www.theodinproject.com/courses/ruby-on-rails/lessons/building-advanced-forms)
